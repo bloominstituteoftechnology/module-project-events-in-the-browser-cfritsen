@@ -68,6 +68,41 @@ function moduleProject2() {
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
+    if (evt.key === keys.up){
+      let currentSquare = document.querySelector('.square.targeted');
+      let parentRow = currentSquare.parentElement;
+      if (parentRow.previousElementSibling){
+        let index = Array.from(parentRow.children).indexOf(currentSquare);
+        currentSquare.classList.remove('targeted');
+        parentRow.previousElementSibling.children[index].classList.add('targeted');
+      }
+    }
+    if (evt.key === keys.down){
+      let currentSquare = document.querySelector('.square.targeted');
+      let parentRow = currentSquare.parentElement;
+      if (parentRow.nextElementSibling){
+        let index = Array.from(parentRow.children).indexOf(currentSquare);
+        currentSquare.classList.remove('targeted');
+        parentRow.nextElementSibling.children[index].classList.add('targeted');
+      }
+    }
+    if (evt.key === keys.left){
+      let currentSquare = document.querySelector('.square.targeted');
+      let parentRow = currentSquare.parentElement;
+      if (currentSquare.previousElementSibling){
+        currentSquare.classList.remove('targeted');
+        currentSquare.previousElementSibling.classList.add('targeted');
+      }
+    }
+    if (evt.key === keys.right){
+      let currentSquare = document.querySelector('.square.targeted');
+      let parentRow = currentSquare.parentElement;
+      if (currentSquare.nextElementSibling){
+        currentSquare.classList.remove('targeted');
+        currentSquare.nextElementSibling.classList.add('targeted');
+      }
+    }
+
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 
