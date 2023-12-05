@@ -88,7 +88,6 @@ function moduleProject2() {
     }
     if (evt.key === keys.left){
       let currentSquare = document.querySelector('.square.targeted');
-      let parentRow = currentSquare.parentElement;
       if (currentSquare.previousElementSibling){
         currentSquare.classList.remove('targeted');
         currentSquare.previousElementSibling.classList.add('targeted');
@@ -96,7 +95,6 @@ function moduleProject2() {
     }
     if (evt.key === keys.right){
       let currentSquare = document.querySelector('.square.targeted');
-      let parentRow = currentSquare.parentElement;
       if (currentSquare.nextElementSibling){
         currentSquare.classList.remove('targeted');
         currentSquare.nextElementSibling.classList.add('targeted');
@@ -105,8 +103,19 @@ function moduleProject2() {
 
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+    if (evt.key === keys.space){
+      let currentSquare = document.querySelector('.square.targeted');
+      if (currentSquare.firstChild){
+        currentSquare.firstChild.dataset.status = 'dead';
+        currentSquare.style.backgroundColor = 'red';
+      }
+    }
 
     // 👉 TASK 5 - End the game 👈
+    if (allSquares.firstChild[dataset.status = 'live'].length === 0){
+          
+    }
+
   })
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
