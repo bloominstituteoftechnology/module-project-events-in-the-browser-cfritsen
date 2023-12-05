@@ -66,6 +66,21 @@ function moduleProject2() {
     allSquares[randomInt].appendChild(mosquito)
   })
 
+  //Function to process End Game activities
+  function endGame(){
+    let restartBtn = document.createElement('button')
+    let headerH2 = document.querySelector('header h2')
+    restartBtn.classList.add('button')
+    restartBtn.style.display = 'block'
+    headerH2.style.textAlign = 'center'
+    restartBtn.textContent = "Restart Game"
+    restartBtn.style.margin = 'auto'
+    headerH2.appendChild(restartBtn)
+
+    document.querySelector('p.info').textContent = `Extermination completed in ${getTimeElapsed()} seconds!`
+
+  }
+
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
     if (evt.key === keys.up){
@@ -108,13 +123,14 @@ function moduleProject2() {
       if (currentSquare.firstChild){
         currentSquare.firstChild.dataset.status = 'dead';
         currentSquare.style.backgroundColor = 'red';
+        if (Array.from(document.querySelectorAll('[data-status = alive]')).length === 0){
+          endGame();
+        }
       }
     }
 
     // 👉 TASK 5 - End the game 👈
-    if (allSquares.firstChild[dataset.status = 'live'].length === 0){
-          
-    }
+  
 
   })
   // 👆 WORK WORK ABOVE THIS LINE 👆
