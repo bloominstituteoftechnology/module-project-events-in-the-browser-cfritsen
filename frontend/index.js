@@ -35,14 +35,25 @@ function moduleProject2() {
       let square = document.createElement('div')
       square.classList.add('square')
       row.appendChild(square)
+
       square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
-        let selection = document.querySelector('.square.targeted');
-        selection.classList.remove('targeted');
-        event.target.classList.add('targeted');
+        if (event.target.nodeName !== 'IMG'){
+          let selection = document.querySelector('.square.targeted');
+          selection.classList.remove('targeted');
+          event.target.classList.add('targeted');
+        } else {
+          let selection = document.querySelector('.square.targeted');
+          selection.classList.remove('targeted');
+          event.target.parentElement.classList.add('targeted');
+        }
+        
       })
     }
   }
+
+  
+
   document.querySelector('.row:nth-child(3)')
     .children[2].classList.add('targeted') // Initial square being targeted
 
@@ -62,24 +73,57 @@ function moduleProject2() {
     let mosquito = document.createElement('img')
     mosquito.src = './mosquito.png'
     mosquito.style.transform = `rotate(${Math.floor(Math.random() * 359)}deg) scale(${Math.random() * 0.4 + 0.8})`
+    mosquito.style.cursor = 'default'
     mosquito.dataset.status = 'alive'
     allSquares[randomInt].appendChild(mosquito)
   })
 
+  let restartBtn = document.createElement('button')
+  let headerH2 = document.querySelector('header h2')
+  restartBtn.classList.add('button')
+  Object.assign(restartBtn.style, {display: 'block', margin: 'auto', display: 'none'})
+  restartBtn.textContent = "Restart Game"
+  headerH2.appendChild(restartBtn)
+  let restartButton = document.querySelector('header h2 button')
+
   //Function to process End Game activities
   function endGame(){
-    let restartBtn = document.createElement('button')
-    let headerH2 = document.querySelector('header h2')
-    restartBtn.classList.add('button')
-    restartBtn.style.display = 'block'
-    headerH2.style.textAlign = 'center'
-    restartBtn.textContent = "Restart Game"
-    restartBtn.style.margin = 'auto'
-    headerH2.appendChild(restartBtn)
-
-    document.querySelector('p.info').textContent = `Extermination completed in ${getTimeElapsed()} seconds!`
-
+    restartButton.style.display = 'block'
+    let timeInSeconds = getTimeElapsed() / 1000
+    document.querySelector('p.info').textContent = `Extermination completed in ${timeInSeconds} seconds!`
   }
+
+  //Reset game with Restart button
+  restartButton.addEventListener('click', () => {
+    //location.reload()
+
+    restartButton.style.display = 'none'
+    startTime = new Date().getTime()
+
+    for (let i = 0; i < allSquares.length; i++){
+      if (allSquares[i].firstChild){
+        allSquares[i].firstChild.remove()
+      }
+      allSquares[i].style.backgroundColor = 'white'
+    }
+    let currentSquare = document.querySelector('.square.targeted')
+    currentSquare.classList.remove('targeted');
+
+    generateRandomIntegers().forEach(randomInt => { // Puts live mosquitoes in 5 random squares
+      let mosquito = document.createElement('img')
+      mosquito.src = './mosquito.png'
+      mosquito.style.transform = `rotate(${Math.floor(Math.random() * 359)}deg) scale(${Math.random() * 0.4 + 0.8})`
+      mosquito.style.cursor = 'default'
+      mosquito.dataset.status = 'alive'
+      allSquares[randomInt].appendChild(mosquito)
+    })
+
+    document.querySelector('.row:nth-child(3)')
+    .children[2].classList.add('targeted') // Initial square being targeted
+
+    document.querySelector('p.info').textContent = "Use arrow keys or mouse clicks to target, space bar to exterminate!"
+
+  })
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
